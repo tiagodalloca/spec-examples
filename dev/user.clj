@@ -1,5 +1,7 @@
 (ns user
-  (:require [clojure.spec :as s]
+  (:require [spec-test.core :as c]
+
+            [clojure.spec :as s]
             [clojure.spec.test :as st]
             [clojure.java.io :as io]
             [clojure.string :as str]
