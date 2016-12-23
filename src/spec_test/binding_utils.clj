@@ -3,7 +3,7 @@
             [clojure.string :as str]))
 
 (def key-regex
-  #"((CTRL|META|\w)-)?\w")
+  #"(CTRL-)?\w")
 
 (def keycombo-regex
   (re-pattern (str "("key-regex"\\s)*"key-regex)))
@@ -51,7 +51,7 @@
 
 (defn create-binding
   "Creates a vector representing a keybinding which can be resolved later.
-  It takes a string binding and a impure f(unction)."
+  It takes a string binding and an impure f(unction)."
   [binding f]
   [(convert-keys binding) f])
 
@@ -80,4 +80,6 @@
             (append-quoted-binding acc binding
                                    `(form-func ~@forms)))
           {} (partition 2 bindings)))
+
+
 
