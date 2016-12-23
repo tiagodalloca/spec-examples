@@ -6,7 +6,7 @@ I've organized some examples I wished I could have seen when I was learning `spe
 
 Hope it helps!
 
-## **\*\*Stars wanted\*\***
+## ** *\*\*Stars wanted\*\* **
 
 If this repository get **at least 5 stars**, I'll keep pushing **more examples about spec** and I'll **document** them all (with **explanations** and **implementation** details).
 
