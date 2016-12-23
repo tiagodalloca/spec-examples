@@ -6,7 +6,7 @@ I've organized some examples I wished I could have seen when I was learning `spe
 
 Hope it helps!
 
-## \*\*Stars wanted\*\*
+## :start::start: Stars wanted\*\* :start::start:
 
 If this repository get **at least 5 stars**, I'll keep pushing **more examples about spec** and I'll **document** them all (with **explanations** and **implementation** details).
 
@@ -18,7 +18,7 @@ This project is **intended to be used from the REPL**.
 
 It _does not contain a -main nor should be compiled_.
 
-### bindings-utils
+## bindings-utils
 
 This namespace contains functions for mapping keystrokes and functions.
 
@@ -61,7 +61,7 @@ user> (bu/map-bindings "CTRL-c s" ((println "You pressed CTRL-c s!")
         :args (s/+ ::binding)) ;; spec'ing map-bindings macro (view example above)
 ```
 
-### dsl-example
+## dsl-example (aka _nosence-lang_)
 
 After a simple example, here's a more 'intresting' one: a dsl implementation.
 
