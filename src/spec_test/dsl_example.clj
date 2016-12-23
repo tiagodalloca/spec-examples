@@ -131,23 +131,23 @@
 (s/def ::args (s/* any?))
 (s/def ::symbol (s/spec symbol?))
 
-(s/def ::constructor-line (s/cat :new-k ::new-keyword
-                                 :constructor ::constructor
-                                 :obj-symbol ::symbol
-                                 :args ::args))
+(s/def ::constructor-line (s/spec (s/cat :new-k ::new-keyword
+                                         :constructor ::constructor
+                                         :obj-symbol ::symbol
+                                         :args ::args)))
 
-(s/def ::infix-line (s/cat :subject ::symbol
-                           :keyword ::infix-keyword
-                           :args ::args))
+(s/def ::infix-line (s/spec (s/cat :subject ::symbol
+                                   :keyword ::infix-keyword
+                                   :args ::args)))
 
-(s/def ::prefix-line (s/cat :keyword ::prefix-keyword
-                            :args ::args))
+(s/def ::prefix-line (s/spec (s/cat :keyword ::prefix-keyword
+                                    :args ::args)))
 
-(s/def ::line (s/or :constructor-line ::constructor-line
-                    :infix-line ::infix-line
-                    :prefix-line ::prefix-line))
+(s/def ::line (s/alt :infix-line ::infix-line
+                     :prefix-line ::prefix-line))
 
-(s/def ::lines-seq (s/cat :body-lines (s/+ ::line)))
+(s/def ::lines-seq (s/cat :constructor-lines (s/* ::constructor-line)
+                          :body-lines (s/+ ::line)))
 
 (s/fdef parse-nosence-lines :args ::lines-seq)
 
