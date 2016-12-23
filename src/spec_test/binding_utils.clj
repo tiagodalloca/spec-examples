@@ -11,8 +11,8 @@
 (s/def ::keystroke-combo (s/and string? #(re-matches keystroke-combo-reg %)))
 (s/def ::list-of-forms (s/+ list?))
 
-(s/def ::binding (s/cat :keystroke-combo   ::keystroke-combo
-                        :list-of-forms  ::list-of-forms))
+(s/def ::binding (s/cat :keystroke-combo ::keystroke-combo
+                        :list-of-forms ::list-of-forms))
 
 (s/fdef map-bindings
         :args (s/+ ::binding))

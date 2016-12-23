@@ -60,7 +60,7 @@
               w))
 
 (defmethod print-dup Person [x w]
-  (print-ctor x (fn [o w] (print-dup (str x) w))
+  (print-ctor x (fn [o w] (print-dup ((str \" x \")) w))
               w))
 
 (defn conversation []
@@ -73,6 +73,8 @@
   [obj-sym field-sym]
   (let [getter (str ".get" (-> field-sym str str/capitalize))]
     (read-string (str "(" getter " " obj-sym ")"))))
+
+(defn handle-return [x] x)
 
 (defn add-participant
   [who conversation]
@@ -103,14 +105,15 @@
   `(apply ~(constructors-map constructor-s) '~args))
 
 (def infix-map
-  {:enters `add-participant
+  {:joins `add-participant
    :says `say-something
    :quits `quit-conversation})
 
 (def prefix-map
   {:print `print
    :print-line `println
-   :get `handle-get})
+   :get `handle-get
+   :return `handle-return})
 
 (def new-k :new)
 
@@ -137,15 +140,16 @@
                            :keyword ::infix-keyword
                            :args ::args))
 
-(s/def ::prefix-line (s/cat :keyword ::prefix-symbol
+(s/def ::prefix-line (s/cat :keyword ::prefix-keyword
                             :args ::args))
 
 (s/def ::line (s/or :constructor-line ::constructor-line
                     :infix-line ::infix-line
                     :prefix-line ::prefix-line))
 
-(s/fdef parse-lines
-        :args (s/cat :body-lines (s/+ ::line) :last-line (s/? any?)))
+(s/def ::lines-seq (s/cat :body-lines (s/+ ::line)))
+
+(s/fdef parse-nosence-lines :args ::lines-seq)
 
 ;; END OF SPEC
 
@@ -155,12 +159,12 @@
 
 (defmethod parse-nosence
   [Symbol]
-  sym-k-sym
+  sym-k-args
   [s1 k & args]
   `(~(k infix-map) ~s1 ~@args))
 (defmethod parse-nosence
   [Keyword]
-  sym-k-sym
+  k-args 
   [k & args]
   `(~(k prefix-map) ~@args))
 
