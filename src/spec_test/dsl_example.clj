@@ -19,7 +19,8 @@
                        ^:volatile-mutable lines]
   Object
   (toString [this]
-    (str "["participants " " lines "]"))
+    (str {:participants participants
+          :lines lines }))
   IConversation
   (getParticipants [this]
     participants)
@@ -53,6 +54,14 @@
 (defmethod print-method Person [x writer]
   (.write writer (str \" x \")))
 
+(defmethod print-dup Conversation [x w]
+  (print-ctor x (fn [o w] (print-dup (str x) w))
+              w))
+
+(defmethod print-dup Person [x w]
+  (print-ctor x (fn [o w] (print-dup (str x) w))
+              w))
+
 (defn conversation []
   (Conversation. #{} []))
 
@@ -85,11 +94,44 @@
   `(apply ~(constructors-map constructor-s) '~args))
 
 (def keyword-map
-  {:in `add-participant
+  {:enters `add-participant
    :says `say-something
    :quits `quit-conversation})
 
+(def new-k :new)
+
+;; SPEC
+
+(defn has?
+  [v coll]
+  (some #{v} coll))
+
+(s/def ::nosence-keyword (s/and keyword? #(has? % (keys keyword-map))))
+(s/def ::nosence-new-keyword (s/and keyword? #(= % new-k)))
+(s/def ::nosence-constructor
+  (s/and symbol? #(has? % (keys constructors-map))))
+(s/def ::nosence-args (s/* any?))
+(s/def ::nosence-symbol (s/spec symbol?))
+
+(s/def ::nosence-constructor-line (s/cat :new-k ::nosence-new-keyword
+                                         :constructor ::nosence-constructor
+                                         :obj-symbol ::nosence-symbol
+                                         :args ::nosence-args))
+
+(s/def ::nosence-regular-line (s/cat :subject ::nosence-symbol
+                                     :keyword ::nosence-keyword
+                                     :args ::nosence-args))
+
+(s/def ::nosence-line (s/or :constructor-line ::nosence-constructor-line
+                            :regular-line ::nosence-regular-line))
+
+(s/fdef parse-nosence-lines
+        :args (s/cat :body-lines (s/+ ::nosence-line) :last-line (s/? any?)))
+
+;; END OF SPEC
+
 (defmulti parse-nosence
+  "Core function for parsing the nosencelang"
   (fn [x & ys] (map class (into [x] ys))))
 
 (defmethod parse-nosence
@@ -104,35 +146,32 @@
 (defmethod parse-nosence [Symbol Keyword]
   [s1 k]
   `(~(k keyword-map) ~s1))
-(defmethod parse-nosence [Symbol]
-  sym
-  [s1] 
-  s1)
+(defmethod parse-nosence :default [x] x)
 
 (defn bindings-from-new [lists]
-  (->> (for [[new-k constructor sym & args] lists
-             :when (= new-k :new)] 
+  (->> (for [[k constructor sym & args] lists
+             :when (= k new-k)] 
          `(~sym ~(construct-thing constructor (conj args sym))))
        (apply concat)
        (into [])))
 
 (defn parse-nosence-lines-helper [lines]
   (let [bindings (bindings-from-new lines)
-        lines (remove #(= :new (first %)) lines)]
+        lines (remove #(= new-k (first %)) lines)]
     `(let ~bindings
-       ~@(for [l lines]
+       ~@(for [l lines] 
            (apply parse-nosence l)))))
 
 (defmacro parse-nosence-lines
   [& lines]
   (parse-nosence-lines-helper lines))
 
-(parse-nosence-lines
- (:new Conversation c)
- (:new Person Steve)
- (Steve :in c)
- (Steve :says "Hello")
- (Steve :says "I hate this place!")
- (Steve :quits)
- (c))
+;; (parse-nosence-lines
+;;  (:new Conversation c)
+;;  (:new Person Steve)
+;;  (Steve :in c)
+;;  (Steve :says "Hello")
+;;  (Steve :says "I hate this place!")
+;;  (Steve :quits)
+;;  (c))
 
