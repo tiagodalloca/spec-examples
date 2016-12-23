@@ -6,7 +6,7 @@ I've organized some examples I wished I could have seen when I was learning `spe
 
 Hope it helps!
 
-(Btw, check out the [Contributing][#Contributing] section!)
+(Btw, check out the [Contributing](#Contributing) section!)
 
 ## :star::star: Stars wanted :star::star:
 
