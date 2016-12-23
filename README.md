@@ -6,6 +6,8 @@ I've organized some examples I wished I could have seen when I was learning `spe
 
 Hope it helps!
 
+(Btw, check out the [Contributing][#Contributing] section!)
+
 ## :star::star: Stars wanted :star::star:
 
 If this repository get **at least 5 stars**, I'll keep pushing **more examples about spec** and I'll **document** them all (with **explanations** and **implementation** details).
@@ -121,6 +123,22 @@ user> (dsl/parse-nosence-lines (:new Conversation c)
 **TODO**: 
   - implementation details
   - spec details
+  
+  
+## Contributing
+
+If you're willing to help, comm'on man! You rock! :clap:
+
+Specially welcomed:
+  - Spelling corrections (English isn't my first language)
+  - Issues related to the code or something
+  - Iprovements suggestions
+  - More examples, of course!
+  - Documentation additions
+  
+  
+
+If there's something I've learned round here in github is that you never know what kind of contribution you might get. I'm waiting yours!
 
 ---
 
