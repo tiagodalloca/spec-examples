@@ -10,7 +10,7 @@ Hope it helps!
 
 If this repository get **at least 5 stars**, I'll keep pushing **more examples about spec** and I'll **document** them all (with **explanations** and **implementation** details).
 
-To help, me myself have already gave one star!
+To help, me myself have already gave one :star2:!
 
 ## Usage
 
@@ -96,7 +96,7 @@ lines: Steve> Hello!
 ```
 
 
-And the Clojure implementation:
+And the Clojure version:
 
 ``` clojure
 user> (require '[spec-examples.dsl-example :as dsl])
