@@ -1,25 +1,27 @@
 # spec-test
 
-Some examples on using clojure.spec!
+Some examples on using `clojure.spec`!
 
+I've organized a series of examples I wished I could have seen when I was learning `spec`.
+
+Hope it helps!
 
 ## Usage
 
 This project is **intended to be used from the REPL**.
 
-It _does not contains a -main nor should be compiled_.
+It _does not contain a -main nor should be compiled_.
 
 ### bindings-utils
 
-This namespace contains functions for mapping keyboard keys and functions.
+This namespace contains functions for mapping keystrokes and functions.
 
 **Example**
 
 ``` clojure
-user> (bu/convert-keys "CTRL-c s") ;; represents a 'CTRL-s' stroke followed by a 's' stroke 
+user> (bu/convert-keys "CTRL-c s") ;; represents a 'CTRL-s' keystroke followed by a 's' 
 
-(3 115)
-;; sequence of key codes
+(3 115) ;; sequence of key codes
 
 user> (bu/map-bindings "CTRL-c s" ((println "You pressed CTRL-c s!")
                                    (println "Yes, you!"))
@@ -33,16 +35,16 @@ user> (bu/map-bindings "CTRL-c s" ((println "You pressed CTRL-c s!")
 **`spec`**
 
 ``` clojure
-(def key-regex
+(def keystroke-reg
   #"(CTRL-)?\w")
 
-(def keycombo-regex
-  (re-pattern (str "("key-regex"\\s)*"key-regex)))
+(def keystroke-combo-reg
+  (re-pattern (str "("keystroke-reg"\\s)*"keystroke-reg)))
 
-(s/def ::str-keycombo (s/and string? #(re-matches keycombo-regex %)))
+(s/def ::keystroke-combo (s/and string? #(re-matches keystroke-combo-reg %)))
 (s/def ::list-of-forms (s/+ list?))
 
-(s/def ::binding (s/cat :str-keycombo   ::str-keycombo
+(s/def ::binding (s/cat :keystroke-combo   ::keystroke-combo
                         :list-of-forms  ::list-of-forms))
 
 (s/fdef map-bindings

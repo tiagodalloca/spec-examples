@@ -2,16 +2,16 @@
   (:require [clojure.spec :as s]
             [clojure.string :as str]))
 
-(def key-regex
+(def keystroke-reg
   #"(CTRL-)?\w")
 
-(def keycombo-regex
-  (re-pattern (str "("key-regex"\\s)*"key-regex)))
+(def keystroke-combo-reg
+  (re-pattern (str "("keystroke-reg"\\s)*"keystroke-reg)))
 
-(s/def ::str-keycombo (s/and string? #(re-matches keycombo-regex %)))
+(s/def ::keystroke-combo (s/and string? #(re-matches keystroke-combo-reg %)))
 (s/def ::list-of-forms (s/+ list?))
 
-(s/def ::binding (s/cat :str-keycombo   ::str-keycombo
+(s/def ::binding (s/cat :keystroke-combo   ::keystroke-combo
                         :list-of-forms  ::list-of-forms))
 
 (s/fdef map-bindings
