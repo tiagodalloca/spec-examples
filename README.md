@@ -2,9 +2,15 @@
 
 Some examples on using `clojure.spec`!
 
-I've organized a series of examples I wished I could have seen when I was learning `spec`.
+I've organized some examples I wished I could have seen when I was learning `spec`.
 
 Hope it helps!
+
+## \*\*Stars wanted\*\*
+
+If this repository get **at least 5 stars**, I'll keep posting **more examples about spec** and I'll **document** them all (with explanations and implementation details).
+
+To help, me myself have already gave one star!
 
 ## Usage
 
@@ -64,7 +70,7 @@ All the namespace content is for helping `parse-nosence-lines` `macro`. All it d
 
 _nosence-lang_ is just a simple language for describing conversations.
 
-Don't look me like that, I wasn't able to think about anything more useful. 
+Don't look me like that, I couldn't think about anything more useful. 
 
 
 It should look like the following:
