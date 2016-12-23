@@ -130,18 +130,17 @@ user> (dsl/parse-nosence-lines (:new Conversation c)
 If you're willing to help, comm'on man! You rock! :clap:
 
 Specially welcomed:
-  - Spelling corrections (English isn't my first language)
-  - Issues related to the code or something
-  - Iprovements suggestions
-  - More examples, of course!
-  - Documentation additions
+  - **Spelling corrections** (English isn't my first language)
+  - **Issues** related to the code or something
+  - Improvements **suggestions**
+  - **More examples**, of course!
+  - **Documentation** additions
   
   
 
 If there's something I've learned round here in github is that you never know what kind of contribution you might get. I'm waiting yours!
 
----
+Well, guess what? I'm doing it because I wanna help others who may be beneficiated from these examples!
 
-Well, guess what? I'm doing it just for fun!
-
-
+Guess something more? I love using :exclamation:s !!!
+In my country, they usually mean happyness!
