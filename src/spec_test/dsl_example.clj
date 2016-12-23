@@ -1,5 +1,6 @@
 (ns spec-test.dsl-example
-  (:require [clojure.spec :as s])
+  (:require [clojure.spec :as s]
+            [clojure.string :as str])
   (:import [clojure.lang Keyword Symbol]))
 
 (definterface IConversation
@@ -68,6 +69,11 @@
 (defn person [name]
   (Person. name nil))
 
+(defmacro handle-get
+  [obj-sym field-sym]
+  (let [getter (str ".get" (-> field-sym str str/capitalize))]
+    (read-string (str "(" getter " " obj-sym ")"))))
+
 (defn add-participant
   [who conversation]
   (.updateParticipants conversation #(conj % who))
@@ -86,6 +92,9 @@
       (do (.updateParticipants c #(disj % who))
           (.setConversation who nil)))))
 
+(defn print-conversation
+  [conversation])
+
 (def constructors-map
   {'Conversation (fn [sym] (conversation))
    'Person #(person (str %))})
@@ -93,10 +102,15 @@
 (defn construct-thing [constructor-s args]
   `(apply ~(constructors-map constructor-s) '~args))
 
-(def keyword-map
+(def infix-map
   {:enters `add-participant
    :says `say-something
    :quits `quit-conversation})
+
+(def prefix-map
+  {:print `print
+   :print-line `println
+   :get `handle-get})
 
 (def new-k :new)
 
@@ -106,46 +120,50 @@
   [v coll]
   (some #{v} coll))
 
-(s/def ::nosence-keyword (s/and keyword? #(has? % (keys keyword-map))))
-(s/def ::nosence-new-keyword (s/and keyword? #(= % new-k)))
-(s/def ::nosence-constructor
+(s/def ::infix-keyword (s/and keyword? #(has? % (keys infix-map))))
+(s/def ::prefix-keyword (s/and keyword? #(has? % (keys prefix-map))))
+(s/def ::new-keyword (s/and keyword? #(= % new-k)))
+(s/def ::constructor
   (s/and symbol? #(has? % (keys constructors-map))))
-(s/def ::nosence-args (s/* any?))
-(s/def ::nosence-symbol (s/spec symbol?))
+(s/def ::args (s/* any?))
+(s/def ::symbol (s/spec symbol?))
 
-(s/def ::nosence-constructor-line (s/cat :new-k ::nosence-new-keyword
-                                         :constructor ::nosence-constructor
-                                         :obj-symbol ::nosence-symbol
-                                         :args ::nosence-args))
+(s/def ::constructor-line (s/cat :new-k ::new-keyword
+                                 :constructor ::constructor
+                                 :obj-symbol ::symbol
+                                 :args ::args))
 
-(s/def ::nosence-regular-line (s/cat :subject ::nosence-symbol
-                                     :keyword ::nosence-keyword
-                                     :args ::nosence-args))
+(s/def ::infix-line (s/cat :subject ::symbol
+                           :keyword ::infix-keyword
+                           :args ::args))
 
-(s/def ::nosence-line (s/or :constructor-line ::nosence-constructor-line
-                            :regular-line ::nosence-regular-line))
+(s/def ::prefix-line (s/cat :keyword ::prefix-symbol
+                            :args ::args))
 
-(s/fdef parse-nosence-lines
-        :args (s/cat :body-lines (s/+ ::nosence-line) :last-line (s/? any?)))
+(s/def ::line (s/or :constructor-line ::constructor-line
+                    :infix-line ::infix-line
+                    :prefix-line ::prefix-line))
+
+(s/fdef parse-lines
+        :args (s/cat :body-lines (s/+ ::line) :last-line (s/? any?)))
 
 ;; END OF SPEC
 
 (defmulti parse-nosence
   "Core function for parsing the nosencelang"
-  (fn [x & ys] (map class (into [x] ys))))
+  (fn [& args] (map class (take 1 args))))
 
 (defmethod parse-nosence
-  [Symbol Keyword Symbol]
+  [Symbol]
   sym-k-sym
-  [s1 k s2]
-  `(~(k keyword-map) ~s1 ~s2))
-(defmethod parse-nosence [Symbol Keyword String]
-  sym-k-s
-  [s1 k s]
-  `(~(k keyword-map) ~s1 ~s))
-(defmethod parse-nosence [Symbol Keyword]
-  [s1 k]
-  `(~(k keyword-map) ~s1))
+  [s1 k & args]
+  `(~(k infix-map) ~s1 ~@args))
+(defmethod parse-nosence
+  [Keyword]
+  sym-k-sym
+  [k & args]
+  `(~(k prefix-map) ~@args))
+
 (defmethod parse-nosence :default [x] x)
 
 (defn bindings-from-new [lists]
