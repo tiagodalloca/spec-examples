@@ -1,4 +1,4 @@
-(ns spec-test.dsl-example
+(ns spec-examples.dsl-example
   (:require [clojure.spec :as s]
             [clojure.string :as str])
   (:import [clojure.lang Keyword Symbol]))

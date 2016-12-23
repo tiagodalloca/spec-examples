@@ -1,4 +1,4 @@
-(ns spec-test.binding-utils
+(ns spec-examples.binding-utils
   (:require [clojure.spec :as s]
             [clojure.string :as str]))
 

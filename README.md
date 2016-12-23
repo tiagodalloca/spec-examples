@@ -1,4 +1,4 @@
-# spec-test
+# spec-examples
 
 Some examples on using `clojure.spec`!
 
@@ -19,6 +19,10 @@ This namespace contains functions for mapping keystrokes and functions.
 **Example**
 
 ``` clojure
+user> (require '[spec-examples.binding-utils.clj])
+
+=> nil
+
 user> (bu/convert-keys "CTRL-c s") ;; represents a 'CTRL-s' keystroke followed by a 's' 
 
 => (3 115) ;; sequence of key codes
@@ -89,7 +93,7 @@ lines: Steve> Hello!
 And the Clojure implementation:
 
 ``` clojure
-user> (require '[spec-test.dsl-example :as dsl])
+user> (require '[spec-examples.dsl-example :as dsl])
 nil
 user> (dsl/parse-nosence-lines (:new Conversation c)
                                (:new Person Steve)
