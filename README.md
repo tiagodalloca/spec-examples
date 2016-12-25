@@ -119,11 +119,6 @@ user> (dsl/parse-nosence-lines (:new Conversation c)
 		    "Larry> Hi there!"
 		    "Steve> I hate this place!"]}
 ```
-
-**TODO**: 
-  - implementation details
-  - spec details
-  
   
 ## Contributing
 
