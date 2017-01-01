@@ -50,16 +50,18 @@
 
                            :interfaces (s/* ::interface)))
 
-;; (pprint (s/conform ::make-class '(:private
-;;                                   [x, y, z]
-;;                                   :immutable
-;;                                   [a, b, c]
-;;                                   :get
-;;                                   (x (str x))
-;;                                   (y (.toUpperCase y))
-;;                                   (z (Math/round z))
-;;                                   :set
-;;                                   (x (when value
-;;                                        (set! x))))))
+;; (clojure.pprint/pprint (s/conform ::make-class '(:private
+;;                                                  [x, y, z]
+;;                                                  :immutable
+;;                                                  [a, b, c]
+;;                                                  :get
+;;                                                  (x (str x))
+;;                                                  (y (.toUpperCase y))
+;;                                                  (z (Math/round z))
+;;                                                  :set
+;;                                                  (x (when value
+;;                                                       (set! x)))
+;;                                                  INaoSeiOque
+;;                                                  (hue))))
 
 ;; END OF SPEC
