@@ -1,6 +1,7 @@
 (ns user
   (:require [spec-examples.binding-utils :as bu]
             [spec-examples.dsl-example :as dsl]
+            [spec-examples.class-utils :as cu]
 
             [clojure.spec :as s]
             [clojure.spec.test :as st]
