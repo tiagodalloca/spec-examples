@@ -1,5 +1,4 @@
-# spec-examples
-
+# Spec examples
 Some examples on using `clojure.spec`!
 
 I've organized some examples I wished I could have seen when I was learning `spec`.
