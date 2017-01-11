@@ -1,5 +1,6 @@
 (ns spec-examples.class-utils
-  (:require [clojure.spec :as s]))
+  (:require [clojure.spec :as s]
+            [clojure.string :as str]))
 
 ;; (make-class
 ;;  :private [x, y, z]
@@ -58,15 +59,38 @@
 
 ;; END OF SPEC
 
-(defn volatile-mutable-metadata
-  [vect]
-  (reduce #(conj %1 %2 `(with-meta (quote ~%2)
-                          {:volatile-mutable true})) [] vect))
+(defn make-it-mutable
+  [x]
+  (read-string (str "^{:volatile-mutable true} " x)))
 
 (defn parse-conformed-interface
   [{:keys [interface methods]}]
-  `(~interface ~@(reduce (fn [acc {:keys [name args body]}]
-                           (conj acc `(~name ~args ~@body))) '() methods)))
+  `(~interface ~@(map (fn [{:keys [name args body]}] `(~name ~args ~@body))
+                      methods)))
+
+(defn interfacefy-methods
+  [class-name g-methods s-methods]
+  `(definterface ~(symbol (str "I" class-name))
+     ~@(map (fn [{:keys [method implementation]}]
+              `(~(symbol (str "get" (str/capitalize (str method))))
+                []))
+         g-methods)
+     ~@(map (fn [{:keys [method implementation]}]
+              `(~(symbol (str "set" (str/capitalize (str method))))
+                [~'value]))
+         s-methods)))
+
+(defn gen-interfacefied-implementation
+  [class-name g-methods s-methods]
+  `(~(symbol (str "I" class-name))
+    ~@(map (fn [{:keys [method implementation]}]
+             `(~(symbol (str "get" (str/capitalize (str method))))
+               [~'this] ~@implementation))
+           g-methods)
+    ~@(map (fn [{:keys [method implementation]}]
+             `(~(symbol (str "set" (str/capitalize (str method))))
+               [~'this ~'value] ~@implementation))
+           s-methods)))
 
 (defn parse-make-class
   [x]
@@ -78,25 +102,21 @@
              {g-methods :methods} :getters
              {s-methods :methods} :setters
              interfaces :interfaces} conformed
-            fields (apply conj i-fields p-fields)
+            fields (into [] (concat (map make-it-mutable p-fields) i-fields))
             parsed-interfaces
             (apply concat
                    (reduce #(conj %1 (parse-conformed-interface %2)) '()
-                           interfaces))]
-        `(let ~(volatile-mutable-metadata p-fields)
-           (deftype ~name ~fields ~@parsed-interfaces))))))
+                           interfaces))
+            class-interface
+            (interfacefy-methods name g-methods s-methods)
+            interface-implementation
+            (gen-interfacefied-implementation name g-methods s-methods)]
+        `(~class-interface
+          (deftype ~name ~fields
+            ~@parsed-interfaces
+            ~@interface-implementation))))))
 
-;; (clojure.pprint/pprint (parse-make-class '(Hue :private
-;;                                                [x, y, z]
-;;                                                :immutable
-;;                                                [a, b, c]
-;;                                                :get
-;;                                                (x (str x))
-;;                                                (y (.toUpperCase y))
-;;                                                (z (Math/round z))
-;;                                                :set
-;;                                                (x (when value
-;;                                                     (set! x value)))
-;;                                                INaoSeiOque
-;;                                                (hue [this] 1))))
+(defmacro make-class
+  [& x]
+  `(do ~@(parse-make-class x)))
 
