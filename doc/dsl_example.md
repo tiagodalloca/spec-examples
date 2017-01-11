@@ -55,9 +55,7 @@ user> (dsl/parse-nosence-lines (:new Conversation c)
 		    "Steve> I hate this place!"]}
 ```
 
-## Explanation
-
-### `spec` stuff
+## `spec` stuff
 
 This dsl is composed by "lines" (lists, actually). **There's three kinds of lines:**
 
@@ -67,7 +65,7 @@ This dsl is composed by "lines" (lists, actually). **There's three kinds of line
 
 We'll take a look in each one of them.
 
-#### Constructor
+### Constructor
 
 ```clojure
 (s/def ::new-keyword (s/and keyword? #(= % new-k)))
@@ -86,7 +84,7 @@ A constructor line has **a 'new' keyword followed by a constructor name (which h
 
 
 
-#### Infix
+### Infix
 
 ```clojure
 (s/def ::infix-keyword (s/and keyword? (set (keys infix-map))))
@@ -99,7 +97,7 @@ A constructor line has **a 'new' keyword followed by a constructor name (which h
 
 A infix line has **a symbol, a infix keyword and 0 or more arguments (in this order)**
 
-#### Prefix
+### Prefix
 
 ```clojure
 (s/def ::prefix-keyword (s/and keyword? (set (keys infix-map))))
@@ -111,7 +109,7 @@ A infix line has **a symbol, a infix keyword and 0 or more arguments (in this or
 
 A infix line has **a prefix keyword and 0 or more arguments**
 
-#### Wrapping the specs
+### Wrapping the specs
 
 ```clojure
 (s/def ::line (s/alt :infix-line ::infix-line
