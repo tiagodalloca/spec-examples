@@ -22,8 +22,8 @@ It _does not contain a -main nor should be compiled_.
 
 ## Summary
 
-	. [Key Binding macro](doc/bindings_utils.md)
-	. [DSL example (aka _nosence-lang_)](doc/dsl_example.md)
+. [Key Binding macro](doc/bindings_utils.md)
+. [DSL example (aka _nosence-lang_)](doc/dsl_example.md)
   
 ## Contributing
 
