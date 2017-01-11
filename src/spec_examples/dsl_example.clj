@@ -98,7 +98,7 @@
   [conversation])
 
 (def constructors-map
-  {'Conversation (fn [sym] (conversation))
+  {'Conversation (fn [_] (conversation))
    'Person #(person (str %))})
 
 (defn construct-thing [constructor-s args]

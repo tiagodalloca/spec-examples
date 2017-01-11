@@ -129,6 +129,25 @@ The macro `parse-nosence-lines` has it's arguments `spec`ed by `::lines-seq`.
 
 The whole thing:
 ```clojure
+(def constructors-map
+  {'Conversation (fn [_] (conversation))
+   'Person #(person (str %))}))
+
+(def infix-map
+  {:joins `add-participant
+   :says `say-something
+   :quits `quit-conversation})
+
+(def prefix-map
+  {:print `print
+   :print-line `println
+   :get `handle-get
+   :return `handle-return})
+
+(def new-k :new)
+
+;; SPEC
+
 (defn has?
   [v coll]
   (some #{v} coll))
@@ -138,14 +157,13 @@ The whole thing:
 (s/def ::new-keyword (s/and keyword? #(= % new-k)))
 (s/def ::constructor (s/and symbol? (set (keys constructors-map))))
 (s/def ::args (s/* any?))
-(s/def ::symbol (s/spec symbol?))
 
 (s/def ::constructor-line (s/spec (s/cat :new-k ::new-keyword
                                          :constructor ::constructor
-                                         :obj-symbol ::symbol
+                                         :obj-symbol symbol?
                                          :args ::args)))
 
-(s/def ::infix-line (s/spec (s/cat :subject ::symbol
+(s/def ::infix-line (s/spec (s/cat :subject symbol?
                                    :keyword ::infix-keyword
                                    :args ::args)))
 
