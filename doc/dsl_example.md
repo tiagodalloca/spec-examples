@@ -2,7 +2,7 @@
 
 After a simple example, here's a more 'intresting' one: a dsl implementation.
 
-All the namespace content is for helping `parse-nosence-lines` `macro`. All it does is parsing _nosence-lang_ code to Clojure. Parsing is what `macro`s are about.
+All the [namespace](../src/spec_examples/dsl_example.clj) content is for helping `parse-nosence-lines` `macro`. All it does is parsing _nosence-lang_ code to Clojure. Parsing is what `macro`s are about.
 
 
 _nosence-lang_ is just a simple language for describing conversations.
