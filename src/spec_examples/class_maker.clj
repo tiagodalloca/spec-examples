@@ -1,4 +1,4 @@
-(ns spec-examples.class-utils
+(ns spec-examples.class-maker
   (:require [clojure.spec :as s]
             [clojure.string :as str]))
 
