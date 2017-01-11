@@ -119,10 +119,6 @@
 
 ;; SPEC
 
-(defn has?
-  [v coll]
-  (some #{v} coll))
-
 (s/def ::infix-keyword (s/and keyword? (set (keys infix-map))))
 (s/def ::prefix-keyword (s/and keyword? (set (keys prefix-map))))
 (s/def ::new-keyword (s/and keyword? #(= % new-k)))
