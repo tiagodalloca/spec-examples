@@ -123,20 +123,18 @@
   [v coll]
   (some #{v} coll))
 
-(s/def ::infix-keyword (s/and keyword? #(has? % (keys infix-map))))
-(s/def ::prefix-keyword (s/and keyword? #(has? % (keys prefix-map))))
+(s/def ::infix-keyword (s/and keyword? (set (keys infix-map))))
+(s/def ::prefix-keyword (s/and keyword? (set (keys prefix-map))))
 (s/def ::new-keyword (s/and keyword? #(= % new-k)))
-(s/def ::constructor
-  (s/and symbol? #(has? % (keys constructors-map))))
+(s/def ::constructor (s/and symbol? (set (keys constructors-map))))
 (s/def ::args (s/* any?))
-(s/def ::symbol (s/spec symbol?))
 
 (s/def ::constructor-line (s/spec (s/cat :new-k ::new-keyword
                                          :constructor ::constructor
-                                         :obj-symbol ::symbol
+                                         :obj-symbol symbol?
                                          :args ::args)))
 
-(s/def ::infix-line (s/spec (s/cat :subject ::symbol
+(s/def ::infix-line (s/spec (s/cat :subject symbol?
                                    :keyword ::infix-keyword
                                    :args ::args)))
 

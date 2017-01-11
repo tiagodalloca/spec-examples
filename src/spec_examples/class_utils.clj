@@ -56,20 +56,6 @@
 
                            :interfaces (s/* ::interface)))
 
-(clojure.pprint/pprint (s/conform ::make-class '(Hue :private
-                                                     [x, y, z]
-                                                     :immutable
-                                                     [a, b, c]
-                                                     :get
-                                                     (x (str x))
-                                                     (y (.toUpperCase y))
-                                                     (z (Math/round z))
-                                                     :set
-                                                     (x (when value
-                                                          (set! x value)))
-                                                     INaoSeiOque
-                                                     (hue [] 1))))
-
 ;; END OF SPEC
 
 (defn volatile-mutable-metadata
