@@ -12,7 +12,7 @@ Don't look me like that, I couldn't think about anything more useful.
 
 It should look like the following:
 
-``` text
+```text
 new Conversation c
 new Person Steve
 new Person Larry

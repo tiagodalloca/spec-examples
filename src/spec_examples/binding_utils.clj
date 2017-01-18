@@ -3,10 +3,10 @@
             [clojure.string :as str]))
 
 (def keystroke-reg
-  #"(CTRL-)?\w")
+  #"(CTRL-)?(\w)")
 
 (def keystroke-combo-reg
-  (re-pattern (str "("keystroke-reg"\\s)*"keystroke-reg)))
+  (re-pattern (str \( keystroke-reg "(\\s))*" keystroke-reg)))
 
 (s/def ::keystroke-combo (s/and string? #(re-matches keystroke-combo-reg %)))
 (s/def ::list-of-forms (s/+ list?))
@@ -14,8 +14,10 @@
 (s/def ::binding (s/cat :keystroke-combo ::keystroke-combo
                         :list-of-forms ::list-of-forms))
 
+(s/def ::map-bindings (s/+ ::binding))
+
 (s/fdef map-bindings
-        :args (s/+ ::binding))
+        :args  ::map-bindings)
 
 ;; END OF SPEC
 

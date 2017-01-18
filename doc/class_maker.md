@@ -37,7 +37,6 @@ user> (ck/make-class ClassExample
                                     "b: " b  \newline
                                     "c: " c  \newline)))
 => user.ClassExample
-
 user> (def obj (ClassExample. "X" 42 "Z" 1 2 3))
 => #'user/obj
 
