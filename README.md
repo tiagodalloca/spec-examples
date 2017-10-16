@@ -37,9 +37,3 @@ Well, guess what? I'm doing it because I wanna help others who may be beneficiat
 
 Guess something more? I love using :exclamation:s !!!
 In my country, they usually mean happyness!
-
-## :star::star: Stars wanted :star::star:
-
-If this repository get **at least 5 stars**, I'll keep pushing **more examples about spec** and I'll **document** them all (with **explanations** and **implementation** details).
-
-To help, me myself have already gave one :star2:!
