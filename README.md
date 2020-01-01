@@ -34,6 +34,3 @@ Specially welcomed:
 If there's something I've learned round here in github is that you never know what kind of contribution you might get. I'm waiting yours!
 
 Well, guess what? I'm doing it because I wanna help others who may be beneficiated from these examples!
-
-Guess something more? I love using :exclamation:s !!!
-In my country, they usually mean happyness!
