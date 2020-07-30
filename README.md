@@ -5,8 +5,6 @@ I've organized some examples I wished I could have seen when I was learning `spe
 
 Hope it helps!
 
-(Btw, check out the **[Contributing](#contributing) section!**)
-
 ## Usage
 
 This project is **intended to be used from the REPL**.
@@ -20,17 +18,9 @@ It _does not contain a -main nor should be compiled_.
   
 ## Contributing
 
-If you're willing to help, comm'on man! You rock! :clap:
-
 Specially welcomed:
   - **Spelling corrections** (English isn't my first language)
   - **Issues** related to the code or something
   - Improvements **suggestions**
   - **More examples**, of course!
   - **Documentation** additions
-  
-  
-
-If there's something I've learned round here in github is that you never know what kind of contribution you might get. I'm waiting yours!
-
-Well, guess what? I'm doing it because I wanna help others who may be beneficiated from these examples!
