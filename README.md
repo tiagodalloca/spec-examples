@@ -9,7 +9,7 @@ Hope it helps!
 
 This project is **intended to be used from the REPL**.
 
-It _does not contain a -main nor should be compiled_.
+It _does not contain a -main nor should it be compiled_.
 
 ## Summary
   - [Key Binding macro](doc/bindings_utils.md)
