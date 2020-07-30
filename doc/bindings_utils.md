@@ -9,7 +9,7 @@ user> (require '[spec-examples.binding-utils.clj])
 
 => nil
 
-user> (bu/convert-keys "CTRL-c s") ;; represents a 'CTRL-s' keystroke followed by a 's' 
+user> (bu/convert-keys "CTRL-c s") ;; represents a 'CTRL-c' keystroke followed by a 's' 
 
 => (3 115) ;; sequence of key codes
 
