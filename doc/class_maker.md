@@ -4,7 +4,7 @@ Clojure definitely is not the right language for using classes all around, speci
 
 But Clojure is a lisp.
 
-This mean macros.
+This means macros.
 
 So we can extend it's syntax...
 
